@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@layer utilities {
+    .container {
+  margin-inline: auto;
+}}
+
+@theme{
+
+    --color-primary:#07070C;
+    --color-iconcolor:#9A9AAF;
+    --font-poppins:"Poppins", "sans-serif";
+}
