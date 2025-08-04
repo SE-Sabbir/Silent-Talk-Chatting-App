@@ -12,6 +12,7 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 import { Link } from 'react-router';
 import googleLogo from '../assets/images/google_logo.png'
 import facebookLogo from '../assets/images/fb_logo.png'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 
 
@@ -35,25 +36,47 @@ const Registration = () => {
 
     const [userConPassword , setUserConPassword] = useState('')
     const [userConPasswordError , setUserConPasswordError] = useState('[#9A9AAF]')
+    const [passwordMatch , setPasswordMatch] = useState ('')
+
+
+    const auth = getAuth();
+
     const handelSubmit=(e)=>{
         e.preventDefault()
-        console.log(userName)
-        console.log(userEmail)
-        console.log(userPhone)
-        console.log(userPassword)
-        console.log(userConPassword)
+        // ------------ Input validation-----------------
         if(!userName) return        setUserNameError       ('[#FFFF00]')
         if(!userEmail) return       setUserEmailError      ('[#FFFF00]')
         if(!userPhone) return       setUserPhoneError      ('[#FFFF00]')
         if(!userPassword) return    setUserPasswordError   ('[#FFFF00]')
         if(!userConPassword) return setUserConPasswordError('[#FFFF00]')
+        if(userPassword != userConPassword) return setPasswordMatch ('! Password & Confirm password not match')
+
+        // -----------Firebase Auth part-----------------
+        
+        createUserWithEmailAndPassword(auth, userEmail, userPassword)
+        .then((userCredential) => {
+        const user = userCredential.user;
+
+        console.log(userCredential)
+        })
+        .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+
+        console.log(error)
+        });
+        
+
+
+
     }
 
   return (
     <>
-    <section id='registration' className='w-full h-screen bg-[#d1d1d1] pt-10'>
+    <section id='registration' className='w-full h-screen bg-[#d7d8d8] pt-10'>
         <div className="container flex justify-center ">
-            <div className="full_form p-[40px] rounded-[16px] bg-[#FFFFFF] flex-col justify-items-center ">
+            <div className="full_form  p-[40px] rounded-[16px] bg-[#FFFFFF] flex-col justify-items-center ">
                 <div className="form_header text-center ">
                     <h1 className=' font-poppins font-bold text-[24px] text-primary '>Create an account</h1>
                     <h2 className=' font-poppins font-normal text-[14px] text-[#7E7E8F] '>You are welcome!</h2>
@@ -104,9 +127,10 @@ const Registration = () => {
                     {/* -----------Confirm Password------------ */}
                     <div className='w-full flex-col justify-center pt-[20px] '>
                         <h2 className=' font-poppins font-normal text-[14px] text-primary mb-[8px] '>Confirm password</h2>
+                        <p className=' font-poppins font-light text-[12px] text-[#FF0000] pb-1 '>{passwordMatch}</p>
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center '>
-                            <input onChange={(e)=>{setUserConPassword(e.target.value), setUserConPasswordError('[#9A9AAF]')}} className=' w-full outline-none' type={showConPass? "text":"password"} placeholder='Confirm password' />
+                            <input onChange={(e)=>{setUserConPassword(e.target.value), setUserConPasswordError('[#9A9AAF]'), setPasswordMatch ('')}} className=' w-full outline-none' type={showConPass? "text":"password"} placeholder='Confirm password' />
                             <div className={`text-[18px] text-${userConPasswordError}`}>
                                 {showConPass?
                                 <FaRegEyeSlash onClick={()=>setshowConPass(!showConPass)}/>
@@ -141,7 +165,7 @@ const Registration = () => {
                         </div>
                     </div>
                     {/* --------Have Account-------- */}
-                    <div className='pt-[20px]'>
+                    <div className='w-full flex justify-center pt-[20px]'>
                         <h2 className=' font-poppins font-normal text-[14px] text[#7A828A] '>Already have an account?<Link className=' text-[#7364DB] pl-1 ' to={'#'}>Sign in</Link></h2>
                     </div>
                 </form>
