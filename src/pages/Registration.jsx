@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import silentTalklogo1 from '../assets/images/SilentTalk logo 1.png'
+import silentTalklogo2 from '../assets/images/SilentTalk logo 2.png'
 import { RiUserLine } from "react-icons/ri";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { RiUserFollowLine } from "react-icons/ri";
@@ -74,9 +76,13 @@ const Registration = () => {
 
   return (
     <>
-    <section id='registration' className='w-full h-screen bg-[#d7d8d8] pt-10'>
-        <div className="container flex justify-center ">
-            <div className="full_form  p-[40px] rounded-[16px] bg-[#FFFFFF] flex-col justify-items-center ">
+    <section id='registration' className='w-full h-screen bg-[#000000] '>
+        <div className="container w-full h-screen flex justify-center items-center ">        
+            <div className='w-full flex justify-around items-center  h-[800px] rounded-4xl bg-[#ececec]'>
+                  <div>
+                <img src={silentTalklogo1} salt="silent Talk logo" />
+            </div>
+            <div className="full_form flex-col justify-items-center p-[40px] rounded-[16px] bg-[#FFFFFF] shadow-2xl ">
                 <div className="form_header text-center ">
                     <h1 className=' font-poppins font-bold text-[24px] text-primary '>Create an account</h1>
                     <h2 className=' font-poppins font-normal text-[14px] text-[#7E7E8F] '>You are welcome!</h2>
@@ -101,14 +107,14 @@ const Registration = () => {
                         </div>
                     </div>
                     {/* -----------Phone------------ */}
-                    <div className='w-full flex-col justify-center pt-[20px] '>
+                    {/* <div className='w-full flex-col justify-center pt-[20px] '>
                         <h2 className=' font-poppins font-normal text-[14px] text-primary mb-[8px] '>Phone</h2>
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center '>
                             <input onChange={(e)=>{setUserPhone(e.target.value),setUserPhoneError('[#9A9AAF]')}} className=' w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' type="number" placeholder='(+880)' />
                             <div className={`text-[18px] text-${userPhoneError}`}><FiPhone/></div>
                         </div>
-                    </div>
+                    </div> */}
                     {/* -----------Password------------ */}
                     <div className='w-full flex-col justify-center pt-[20px] '>
                         <h2 className=' font-poppins font-normal text-[14px] text-primary mb-[8px] '>Password</h2>
@@ -145,12 +151,12 @@ const Registration = () => {
                         Register
                     </button> 
                     {/* ------------Bottom Part------------ */}
-                    <div className='w-full flex items-center gap-2 pt-[20px] '>
+                    {/* <div className='w-full flex items-center gap-2 pt-[20px] '>
                         <input className='w-[18px] h-[18px] ' type="checkbox" />
                         <p className=' font-poppins font-normal text-[12px] text-iconcolor '>I agree with terms & conditions</p>
-                    </div>
+                    </div> */}
                     {/* ---------Social Link---------- */}
-                    <div className='w-full flex justify-between pt-[20px] '>
+                    {/* <div className='w-full flex justify-between pt-[20px] '>
                         <div className=' w-[170px] h-[50px] flex justify-center items-center border border-[#E8EDF2] rounded-[8px] '>
                             <Link className=' font-poppins font-normal text-[12px] text-primary flex items-center gap-2 '>
                             <div className='w-[20px] h-[20px] '>
@@ -163,12 +169,13 @@ const Registration = () => {
                             <img className=' w-full bg-cover ' src={facebookLogo} alt="google logo" />
                             </div> Google account</Link>
                         </div>
-                    </div>
+                    </div> */}
                     {/* --------Have Account-------- */}
                     <div className='w-full flex justify-center pt-[20px]'>
                         <h2 className=' font-poppins font-normal text-[14px] text[#7A828A] '>Already have an account?<Link className=' text-[#7364DB] pl-1 ' to={'#'}>Sign in</Link></h2>
                     </div>
                 </form>
+            </div>
             </div>
         </div>
     </section>
