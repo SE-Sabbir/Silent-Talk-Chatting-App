@@ -15,6 +15,9 @@ import { Link } from 'react-router';
 import googleLogo from '../assets/images/google_logo.png'
 import facebookLogo from '../assets/images/fb_logo.png'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Slide, toast, Zoom } from 'react-toastify';
+import { PropagateLoader } from 'react-spinners';
+import { sendEmailVerification } from 'firebase/auth/web-extension';
 
 
 
@@ -30,8 +33,8 @@ const Registration = () => {
     const [userEmail , setUserEmail] = useState('')
     const [userEmailError , setUserEmailError] = useState('[#9A9AAF]')
 
-    const [userPhone , setUserPhone] = useState('')
-    const [userPhoneError , setUserPhoneError] = useState('[#9A9AAF]')
+    // const [userPhone , setUserPhone] = useState('')
+    // const [userPhoneError , setUserPhoneError] = useState('[#9A9AAF]')
 
     const [userPassword , setUserPassword] = useState('')
     const [userPasswordError , setUserPasswordError] = useState('[#9A9AAF]')
@@ -39,6 +42,8 @@ const Registration = () => {
     const [userConPassword , setUserConPassword] = useState('')
     const [userConPasswordError , setUserConPasswordError] = useState('[#9A9AAF]')
     const [passwordMatch , setPasswordMatch] = useState ('')
+
+    const [showLoading , setShowLoading] = useState(false)
 
 
     const auth = getAuth();
@@ -48,10 +53,11 @@ const Registration = () => {
         // ------------ Input validation-----------------
         if(!userName) return        setUserNameError       ('[#FFFF00]')
         if(!userEmail) return       setUserEmailError      ('[#FFFF00]')
-        if(!userPhone) return       setUserPhoneError      ('[#FFFF00]')
+        // if(!userPhone) return       setUserPhoneError      ('[#FFFF00]')
         if(!userPassword) return    setUserPasswordError   ('[#FFFF00]')
         if(!userConPassword) return setUserConPasswordError('[#FFFF00]')
         if(userPassword != userConPassword) return setPasswordMatch ('! Password & Confirm password not match')
+        setShowLoading(true)
 
         // -----------Firebase Auth part-----------------
         
@@ -59,12 +65,59 @@ const Registration = () => {
         .then((userCredential) => {
         const user = userCredential.user;
 
+        setShowLoading(false)
+
+        toast.success('Registration Successful', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+        });
+        // --------Send Email otp----------
+        sendEmailVerification(auth.currentUser)
+        .then(() => {
+            // ------Send Otp toast----
+            toast.info('Send a Confirmation Otp on your Email', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Zoom,
+            });
+            console.log('Otp Send Successful')
+        
+        });
+
         console.log(userCredential)
         })
         .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        if(errorCode == 'auth/email-already-in-use'){
+            setShowLoading(false)
 
+            // --------Error toast----------
+            toast.error('This email is already used', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Slide,
+                });
+        }
 
         console.log(error)
         });
@@ -78,9 +131,9 @@ const Registration = () => {
     <>
     <section id='registration' className='w-full h-screen bg-[#000000] '>
         <div className="container w-full h-screen flex justify-center items-center ">        
-            <div className='w-full flex justify-around items-center  h-[800px] rounded-4xl bg-[#ececec]'>
-                  <div>
-                <img src={silentTalklogo1} salt="silent Talk logo" />
+            <div className=' w-full h-[90%] flex justify-around items-center rounded-4xl bg-[#ececec]'>
+                  <div className='silentTalk_logo'>
+                <img src={silentTalklogo1} alt="silent Talk logo" />
             </div>
             <div className="full_form flex-col justify-items-center p-[40px] rounded-[16px] bg-[#FFFFFF] shadow-2xl ">
                 <div className="form_header text-center ">
@@ -147,16 +200,24 @@ const Registration = () => {
                         </div>
                     </div>
                     {/* ----------Sign Up Button-------------- */}
+                    {
+                        showLoading?
+
+                    <button className='mt-[20px] w-[360px] h-[52px] flex justify-center items-center pb-3  bg-[#7364DB] rounded-[8px] hover:bg-[#5C529F] '>
+                        <PropagateLoader color={'#FFF'} />
+                    </button> 
+                        :
                     <button className='mt-[20px] w-[360px] h-[52px] font-poppins font-semibold text-[16px] text-[#FFFFFF]  bg-[#7364DB] rounded-[8px] hover:bg-[#5C529F] '>
                         Register
                     </button> 
+                    }
                     {/* ------------Bottom Part------------ */}
                     {/* <div className='w-full flex items-center gap-2 pt-[20px] '>
                         <input className='w-[18px] h-[18px] ' type="checkbox" />
                         <p className=' font-poppins font-normal text-[12px] text-iconcolor '>I agree with terms & conditions</p>
                     </div> */}
                     {/* ---------Social Link---------- */}
-                    {/* <div className='w-full flex justify-between pt-[20px] '>
+                    <div className='w-full flex justify-between pt-[20px] '>
                         <div className=' w-[170px] h-[50px] flex justify-center items-center border border-[#E8EDF2] rounded-[8px] '>
                             <Link className=' font-poppins font-normal text-[12px] text-primary flex items-center gap-2 '>
                             <div className='w-[20px] h-[20px] '>
@@ -169,12 +230,12 @@ const Registration = () => {
                             <img className=' w-full bg-cover ' src={facebookLogo} alt="google logo" />
                             </div> Google account</Link>
                         </div>
-                    </div> */}
-                    {/* --------Have Account-------- */}
-                    <div className='w-full flex justify-center pt-[20px]'>
-                        <h2 className=' font-poppins font-normal text-[14px] text[#7A828A] '>Already have an account?<Link className=' text-[#7364DB] pl-1 ' to={'#'}>Sign in</Link></h2>
                     </div>
+                    {/* --------Have Account-------- */}
                 </form>
+                    <div className='w-full flex justify-center pt-[20px]'>
+                        <h2 className=' font-poppins font-normal text-[14px] text[#7A828A] '>Already have an account?<Link className=' text-[#7364DB] pl-1 ' to={'/login'}>Sign in</Link></h2>
+                    </div>
             </div>
             </div>
         </div>
