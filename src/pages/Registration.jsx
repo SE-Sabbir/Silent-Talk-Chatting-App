@@ -28,19 +28,19 @@ const Registration = () => {
     const [showConPass , setshowConPass] = useState( false )
 
     const [userName , setUserName] = useState('')
-    const [userNameError , setUserNameError] = useState('[#9A9AAF]')
+    const [userNameError , setUserNameError] = useState('')
 
     const [userEmail , setUserEmail] = useState('')
-    const [userEmailError , setUserEmailError] = useState('[#9A9AAF]')
+    const [userEmailError , setUserEmailError] = useState('')
 
     // const [userPhone , setUserPhone] = useState('')
     // const [userPhoneError , setUserPhoneError] = useState('[#9A9AAF]')
 
     const [userPassword , setUserPassword] = useState('')
-    const [userPasswordError , setUserPasswordError] = useState('[#9A9AAF]')
+    const [userPasswordError , setUserPasswordError] = useState('')
 
     const [userConPassword , setUserConPassword] = useState('')
-    const [userConPasswordError , setUserConPasswordError] = useState('[#9A9AAF]')
+    const [userConPasswordError , setUserConPasswordError] = useState('')
     const [passwordMatch , setPasswordMatch] = useState ('')
 
     const [showLoading , setShowLoading] = useState(false)
@@ -51,12 +51,13 @@ const Registration = () => {
     const handelSubmit=(e)=>{
         e.preventDefault()
         // ------------ Input validation-----------------
-        if(!userName) return        setUserNameError       ('[#FFFF00]')
-        if(!userEmail) return       setUserEmailError      ('[#FFFF00]')
-        // if(!userPhone) return       setUserPhoneError      ('[#FFFF00]')
-        if(!userPassword) return    setUserPasswordError   ('[#FFFF00]')
-        if(!userConPassword) return setUserConPasswordError('[#FFFF00]')
+        if(!userName) return        setUserNameError       ('! Please Enter Your Name')
+        if(!userEmail) return       setUserEmailError      ('! Please Enter Your Email')
+        // if(!userPhone) return       setUserPhoneError      ('')
+        if(!userPassword) return    setUserPasswordError   ('! Please Set a Password')
+        if(!userConPassword) return setUserConPasswordError('! Please Set a Confirm Password')
         if(userPassword != userConPassword) return setPasswordMatch ('! Password & Confirm password not match')
+
         setShowLoading(true)
 
         // -----------Firebase Auth part-----------------
@@ -140,23 +141,25 @@ const Registration = () => {
                     <h1 className=' font-poppins font-bold text-[24px] text-primary '>Create an account</h1>
                     <h2 className=' font-poppins font-normal text-[14px] text-[#7E7E8F] '>You are welcome!</h2>
                 </div>
-                <form onSubmit={handelSubmit} action="">
+                <form onSubmit={handelSubmit}>
                     {/* -----------Name------------ */}
                     <div className='w-full flex-col justify-center pt-[30px]'>
                         <h2 className=' font-poppins font-normal text-[14px] text-primary mb-[8px] '>Your name</h2>
+                        <p className=' font-poppins font-light text-[12px] text-[#FF0000] pb-1 '>{userNameError}</p>
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center '>
-                        <input onChange={(e)=>{setUserName(e.target.value), setUserNameError('[#9A9AAF]')}} className=' w-full outline-none' type="text" placeholder="User name" />
-                            <div className={`text-[18px] text-${userNameError}`}><RiUserLine/></div>
+                        <input onChange={(e)=>{setUserName(e.target.value), setUserNameError('')}} className=' w-full outline-none' type="text" placeholder="User name" />
+                            <div className='text-[18px] text-iconcolor' ><RiUserLine/></div>
                         </div>
                     </div>
                     {/* -----------Email------------ */}
                     <div className='w-full flex-col justify-center pt-[20px] '>
                         <h2 className=' font-poppins font-normal text-[14px] text-primary mb-[8px] '>E-mail</h2>
+                        <p className=' font-poppins font-light text-[12px] text-[#FF0000] pb-1 '>{userEmailError}</p>
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center '>
-                            <input onChange={(e)=>{setUserEmail(e.target.value), setUserEmailError('[#9A9AAF]')}} className=' w-full outline-none' type='email' placeholder='Email' />
-                            <div className={` text-[18px] text-${userEmailError}`}><TbMail/></div>
+                            <input onChange={(e)=>{setUserEmail(e.target.value), setUserEmailError('')}} className=' w-full outline-none' type='email' placeholder='Email' />
+                            <div className='text-[18px] text-iconcolor' ><TbMail/></div>
                         </div>
                     </div>
                     {/* -----------Phone------------ */}
@@ -165,16 +168,17 @@ const Registration = () => {
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center '>
                             <input onChange={(e)=>{setUserPhone(e.target.value),setUserPhoneError('[#9A9AAF]')}} className=' w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' type="number" placeholder='(+880)' />
-                            <div className={`text-[18px] text-${userPhoneError}`}><FiPhone/></div>
+                            <div className='text-[18px] text-iconcolor' ><FiPhone/></div>
                         </div>
                     </div> */}
                     {/* -----------Password------------ */}
                     <div className='w-full flex-col justify-center pt-[20px] '>
                         <h2 className=' font-poppins font-normal text-[14px] text-primary mb-[8px] '>Password</h2>
+                        <p className=' font-poppins font-light text-[12px] text-[#FF0000] pb-1 '>{userPasswordError}</p>
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center '>
-                            <input onChange={(e)=>{setUserPassword(e.target.value), setUserPasswordError('[#9A9AAF]')}} className=' w-full outline-none' type={showPass? "text":"password"} placeholder='Password' />
-                            <div className={`text-[18px] text-${userPasswordError}`}>
+                            <input onChange={(e)=>{setUserPassword(e.target.value), setUserPasswordError('')}} className=' w-full outline-none' type={showPass? "text":"password"} placeholder='Password' />
+                            <div className='text-[18px] text-iconcolor' >
                                 {showPass?
                                 <FaRegEyeSlash onClick={()=>setshowPass(!showPass)}/>
                                 :
@@ -186,11 +190,11 @@ const Registration = () => {
                     {/* -----------Confirm Password------------ */}
                     <div className='w-full flex-col justify-center pt-[20px] '>
                         <h2 className=' font-poppins font-normal text-[14px] text-primary mb-[8px] '>Confirm password</h2>
-                        <p className=' font-poppins font-light text-[12px] text-[#FF0000] pb-1 '>{passwordMatch}</p>
+                        <p className=' font-poppins font-light text-[12px] text-[#FF0000] pb-1 '>{userConPasswordError} , {passwordMatch}</p>
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center '>
-                            <input onChange={(e)=>{setUserConPassword(e.target.value), setUserConPasswordError('[#9A9AAF]'), setPasswordMatch ('')}} className=' w-full outline-none' type={showConPass? "text":"password"} placeholder='Confirm password' />
-                            <div className={`text-[18px] text-${userConPasswordError}`}>
+                            <input onChange={(e)=>{setUserConPassword(e.target.value), setUserConPasswordError(''), setPasswordMatch ('')}} className=' w-full outline-none' type={showConPass? "text":"password"} placeholder='Confirm password' />
+                            <div className='text-[18px] text-iconcolor' >
                                 {showConPass?
                                 <FaRegEyeSlash onClick={()=>setshowConPass(!showConPass)}/>
                                 :
