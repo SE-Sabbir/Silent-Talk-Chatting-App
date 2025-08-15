@@ -2,20 +2,22 @@ import React from 'react'
 import app from './firebase.config'
 import './App.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router'
-import LayoutOne from './layouts/LayoutOne'
 import { ToastContainer } from 'react-toastify'
 import Registration from './pages/Registration'
 import Login from './pages/Login'
-import Home from './pages/Home'
+import LayoutOne from './layouts/LayoutOne'
+import { Home } from 'lucide-react'
 
 const App = () => {
   const myRoute = createBrowserRouter(createRoutesFromElements(
     <Route>
 
+      <Route path='/' element={<LayoutOne />}>
+        <Route index element={<Home/>}/>
+      </Route>
 
-    <Route path='/register' element={<Registration />}/>
-    <Route path='/login' element={<Login />}/>
-    <Route path='/home' element={<Home />}/>
+      <Route path='/register' element={<Registration />}/>
+      <Route path='/login' element={<Login />}/>
 
     </Route>
   ))

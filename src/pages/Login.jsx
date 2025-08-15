@@ -3,7 +3,7 @@ import silentTalklogo1 from '../assets/images/SilentTalk logo 1.png'
 import { TbMail } from "react-icons/tb";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { Slide, toast, Zoom } from 'react-toastify';
 
@@ -14,7 +14,7 @@ const Login = () => {
 
 
     const auth = getAuth();
-
+    const navigate = useNavigate()
     const handelLogin = (e)=>{
         e.preventDefault();
 
@@ -32,7 +32,7 @@ const Login = () => {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            
+
             console.log(user)
             //----------Login toast----------
             if(user.emailVerified == true){
@@ -47,6 +47,7 @@ const Login = () => {
                     theme: "light",
                     transition: Slide,
                     });
+                    navigate('/')
             }
             // ------verified your email toast----
             else{

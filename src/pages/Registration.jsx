@@ -11,7 +11,7 @@ import { FiPhone } from "react-icons/fi";
 import { FiPhoneMissed } from "react-icons/fi";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import googleLogo from '../assets/images/google_logo.png'
 import facebookLogo from '../assets/images/fb_logo.png'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -47,6 +47,7 @@ const Registration = () => {
 
 
     const auth = getAuth();
+    const navigate = useNavigate()
 
     const handelSubmit=(e)=>{
         e.preventDefault()
@@ -79,6 +80,7 @@ const Registration = () => {
         theme: "light",
         transition: Slide,
         });
+        navigate('/login')
         // --------Send Email otp----------
         sendEmailVerification(auth.currentUser)
         .then(() => {
