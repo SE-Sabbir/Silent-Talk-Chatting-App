@@ -1,14 +1,20 @@
 import { Home } from 'lucide-react'
-import React from 'react'
-import { Outlet } from 'react-router'
-import SilentTalkLogo from '../assets/images/SilentTalk logo 1.png'
-import ChatUserInbox from '../components/ChatUserInbox'
+import React, { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router'
 import ChatUserList from '../components/ChatUserList'
+import { useSelector } from 'react-redux'
 
 const LayoutOne = () => {
+
+  const userInfo = useSelector((state)=> state.currentUserInfo.value )
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(userInfo === null) return navigate('/errorPage')
+  },[])
+
   return (
     <>
-    {/* <ChatUserInbox /> */}
     <ChatUserList/>
     <Outlet />
     </>

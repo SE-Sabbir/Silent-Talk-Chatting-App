@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import silentTalklogo1 from '../assets/images/SilentTalk logo 1.png'
-import silentTalklogo2 from '../assets/images/SilentTalk logo 2.png'
 import { RiUserLine } from "react-icons/ri";
-import { RiUserUnfollowLine } from "react-icons/ri";
-import { RiUserFollowLine } from "react-icons/ri";
 import { TbMail } from "react-icons/tb";
-import { TbMailExclamation } from "react-icons/tb";
-import { TbMailCheck } from "react-icons/tb";
-import { FiPhone } from "react-icons/fi";
-import { FiPhoneMissed } from "react-icons/fi";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router';
 import googleLogo from '../assets/images/google_logo.png'
 import facebookLogo from '../assets/images/fb_logo.png'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword , updateProfile } from "firebase/auth";
 import { Slide, toast, Zoom } from 'react-toastify';
 import { PropagateLoader } from 'react-spinners';
 import { sendEmailVerification } from 'firebase/auth/web-extension';
@@ -66,6 +59,15 @@ const Registration = () => {
         createUserWithEmailAndPassword(auth, userEmail, userPassword)
         .then((userCredential) => {
         const user = userCredential.user;
+
+        updateProfile(auth.currentUser, {
+        displayName: userName,
+        photoURL: "https://static.vecteezy.com/system/resources/thumbnails/029/271/062/small_2x/avatar-profile-icon-in-flat-style-male-user-profile-illustration-on-isolated-background-man-profile-sign-business-concept-vector.jpg"
+
+        }).then(() => {
+            console.log('display name added', userName)
+        }).catch((error) => {
+        });
 
         setShowLoading(false)
 

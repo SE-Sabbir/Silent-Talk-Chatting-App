@@ -7,6 +7,7 @@ import Registration from './pages/Registration'
 import Login from './pages/Login'
 import LayoutOne from './layouts/LayoutOne'
 import { Home } from 'lucide-react'
+import ErrorPage from './pages/ErrorPage'
 
 const App = () => {
   const myRoute = createBrowserRouter(createRoutesFromElements(
@@ -18,6 +19,7 @@ const App = () => {
 
       <Route path='/register' element={<Registration />}/>
       <Route path='/login' element={<Login />}/>
+      <Route path='/errorPage' element={<ErrorPage />}/>
 
     </Route>
   ))

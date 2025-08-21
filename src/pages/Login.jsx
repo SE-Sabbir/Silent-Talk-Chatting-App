@@ -6,18 +6,21 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { Slide, toast, Zoom } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { userInfo } from '../slices/userInfoSlice';
 
 const Login = () => {
     // ---------------Input field------------------
     const [formData , setFormData] = useState ({email:'', emailError:'', password:'', passwordError:''})
     const [ loginError , setLoginError] = useState('')
 
+    const dispatch = useDispatch ()
+
 
     const auth = getAuth();
     const navigate = useNavigate()
     const handelLogin = (e)=>{
         e.preventDefault();
-
         
         if(!formData.email){
             setFormData(prev => ({...prev, emailError:'Enter your email'}))
@@ -33,9 +36,13 @@ const Login = () => {
             // Signed in 
             const user = userCredential.user;
 
-            console.log(user)
+            dispatch(userInfo(user))
+
             //----------Login toast----------
             if(user.emailVerified == true){
+                localStorage.setItem('currentUserInfo' , JSON.stringify(user))
+                dispatch(userInfo(user))
+
                 toast.success('Login Successful', {
                     position: "top-right",
                     autoClose: 3000,
