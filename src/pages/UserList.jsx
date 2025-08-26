@@ -30,8 +30,8 @@ const UserList = () => {
                 <img src={profileImage} alt="profile" />
               </div>
               <div>
-                <h1>User Name</h1>
-                <h2 className='font-normal text-[14px]'>username@gmail.com</h2>
+                <h1>sabbir</h1>
+                <h2 className='font-normal text-[14px]'>sabbirhp50@gmail.com</h2>
               </div>
               <div className='flex gap-2'>
                 <button className='text-[33px] text-[red] active:scale-115'><MdCancel/></button>

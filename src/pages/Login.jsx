@@ -8,6 +8,7 @@ import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { Slide, toast, Zoom } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { userInfo } from '../slices/userInfoSlice';
+import { getDatabase, ref, set } from "firebase/database";
 
 const Login = () => {
     // ---------------Input field------------------
@@ -16,8 +17,8 @@ const Login = () => {
 
     const dispatch = useDispatch ()
 
-
     const auth = getAuth();
+    const db = getDatabase();
     const navigate = useNavigate()
     const handelLogin = (e)=>{
         e.preventDefault();
@@ -54,8 +55,14 @@ const Login = () => {
                     theme: "light",
                     transition: Slide,
                     });
-                    navigate('/')
-            }
+                    navigate('/userlist')
+            // ---------Real Time Database -------------
+                set(ref(db, 'All Users/' + user.uid  ), {
+                username: user.displayName,
+                email: user.email,
+                profile_picture : user.photoURL
+                });
+        }
             // ------verified your email toast----
             else{
             toast.info('Please verify your email OTP Link', {
