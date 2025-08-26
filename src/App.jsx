@@ -8,13 +8,15 @@ import Login from './pages/Login'
 import LayoutOne from './layouts/LayoutOne'
 import { Home } from 'lucide-react'
 import ErrorPage from './pages/ErrorPage'
+import UserList from './pages/UserList'
 
 const App = () => {
   const myRoute = createBrowserRouter(createRoutesFromElements(
     <Route>
 
       <Route path='/' element={<LayoutOne />}>
-        <Route index element={<Home/>}/>
+        <Route index element={<Home />}/>
+        <Route path='/userlist' element={<UserList />}/>
       </Route>
 
       <Route path='/register' element={<Registration />}/>

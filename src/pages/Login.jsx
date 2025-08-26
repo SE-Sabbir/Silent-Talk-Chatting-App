@@ -95,6 +95,7 @@ const Login = () => {
                 <div className='flex-col justify-items-center p-[40px] rounded-[16px] bg-[#FFFFFF] shadow-2xl'>
                     <div className='form_header text-center'>
                         <h1 className='font-poppins font-bold text-[24px] text-primary'>User Login</h1>
+    {/* -------------------Login Erorr show-------------------- */}
                         <h2 className='font-poppins font-normal text-[14px] text-[#FF0000]'>{loginError}</h2>
                     </div>
                 <form onSubmit={handelLogin} >
@@ -105,7 +106,7 @@ const Login = () => {
                         <div className='userEmail w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center'>
                             <input 
-                            onChange={(e)=>setFormData((prev)=>({...prev,email:e.target.value,emailError:''}))} 
+                            onChange={(e)=>{setFormData((prev)=>({...prev,email:e.target.value,emailError:''}));setLoginError('')}} 
                             type="email" placeholder='Enater your E-mail' className='w-full outline-none' />
                             <div className='text-[18px] text-iconcolor'><TbMail/></div>
                         </div>
@@ -117,7 +118,7 @@ const Login = () => {
                         <div className='first_name w-[360px] h-[48px] font-poppins font-normal text-[14px] border border-[#E8EDF2] rounded-[15px] px-4 
                         flex justify-between items-center'>
                             <input
-                            onChange={(e)=>setFormData((prev)=>({...prev,password:e.target.value,passwordError:''}))}
+                            onChange={(e)=>{setFormData((prev)=>({...prev,password:e.target.value,passwordError:''}));setLoginError('')}}
                              type='password' placeholder='Password' className='w-full outline-none'/>
                             <div className='text-[18px] text-iconcolor'>
                             </div>

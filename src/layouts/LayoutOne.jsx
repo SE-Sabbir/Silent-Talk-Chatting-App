@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router'
 import ChatUserList from '../components/ChatUserList'
 import { useSelector } from 'react-redux'
+import Navbar from '../components/Navbar'
 
 const LayoutOne = () => {
 
@@ -15,7 +16,7 @@ const LayoutOne = () => {
 
   return (
     <>
-    <ChatUserList/>
+    {/* <ChatUserList /> */}
     <Outlet />
     </>
   )
