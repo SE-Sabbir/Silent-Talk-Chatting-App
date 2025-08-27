@@ -1,4 +1,4 @@
-import { Home } from 'lucide-react'
+
 import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router'
 import ChatUserList from '../components/ChatUserList'
@@ -12,7 +12,7 @@ const LayoutOne = () => {
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if(userInfo === null) return navigate('/errorPage')
+    if(userInfo === null) return navigate('/login')
   },[])
 
   return (

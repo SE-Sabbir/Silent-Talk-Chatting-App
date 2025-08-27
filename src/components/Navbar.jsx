@@ -7,6 +7,7 @@ import { MdCalculate } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { Link, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+import { userInfo } from '../slices/userInfoSlice';
 
 const Navbar = () => {
 
