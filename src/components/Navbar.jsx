@@ -12,8 +12,8 @@ const Navbar = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-  
     const currentUserInfo = useSelector((state)=> state.currentUserInfo.value )
+    
     const logOut = ()=>{
       localStorage.removeItem('currentUserInfo')
       dispatch(userInfo(null))

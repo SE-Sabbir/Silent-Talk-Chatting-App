@@ -14,12 +14,12 @@ const App = () => {
     <Route>
 
       <Route path='/' element={<LayoutOne />}>
-      <Route path='userlist' element={<UserList />}/>
       </Route>
 
+      <Route path='userlist' element={<UserList />}/>
       <Route path='/register' element={<Registration />}/>
       <Route path='/login' element={<Login />}/>
-      <Route path='/errorPage' element={<ErrorPage />}/>
+      <Route path='*' element={<ErrorPage />}/>
     </Route>
   ))
   return (
