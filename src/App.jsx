@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify'
 import Registration from './pages/Registration'
 import Login from './pages/Login'
 import LayoutOne from './layouts/LayoutOne'
-import { Home } from 'lucide-react'
 import ErrorPage from './pages/ErrorPage'
 import UserList from './pages/UserList'
 
@@ -15,14 +14,12 @@ const App = () => {
     <Route>
 
       <Route path='/' element={<LayoutOne />}>
-        <Route index element={<Home />}/>
-        <Route path='/userlist' element={<UserList />}/>
+      <Route path='userlist' element={<UserList />}/>
       </Route>
 
       <Route path='/register' element={<Registration />}/>
       <Route path='/login' element={<Login />}/>
       <Route path='/errorPage' element={<ErrorPage />}/>
-
     </Route>
   ))
   return (

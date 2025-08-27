@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from 'react-router'
 import ChatUserList from '../components/ChatUserList'
 import { useSelector } from 'react-redux'
 import Navbar from '../components/Navbar'
+import UserInbox from '../components/UserInbox'
 
 const LayoutOne = () => {
 
@@ -16,7 +17,15 @@ const LayoutOne = () => {
 
   return (
     <>
-    {/* <ChatUserList /> */}
+    <div className='flex lg:flex-nowrap flex-wrap'>
+    <div className='lg:block hidden'>
+    <Navbar />
+    </div>
+    <div className='lg:block hidden'>
+    <ChatUserList />
+    </div>
+    <UserInbox />
+    </div>
     <Outlet />
     </>
   )

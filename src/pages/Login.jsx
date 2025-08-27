@@ -55,7 +55,7 @@ const Login = () => {
                     theme: "light",
                     transition: Slide,
                     });
-                    navigate('/userlist')
+                    navigate('/')
             // ---------Real Time Database -------------
                 set(ref(db, 'All Users/' + user.uid  ), {
                 username: user.displayName,
