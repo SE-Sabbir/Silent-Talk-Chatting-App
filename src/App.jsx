@@ -16,7 +16,7 @@ const App = () => {
       <Route path='/' element={<LayoutOne />}>
       </Route>
 
-      <Route path='userlist' element={<UserList />}/>
+      <Route path='/userlist' element={<UserList />}/>
       <Route path='/register' element={<Registration />}/>
       <Route path='/login' element={<Login />}/>
       <Route path='*' element={<ErrorPage />}/>

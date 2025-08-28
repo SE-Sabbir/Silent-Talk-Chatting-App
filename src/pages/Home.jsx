@@ -1,9 +1,16 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
+import ChatUserList from '../components/ChatUserList'
+import UserInbox from '../components/UserInbox'
 
 const Home = () => {
   return (
     <>
-    <h1>This is home page</h1>
+    <div className='flex'>
+      <Navbar />
+      <ChatUserList />
+      <UserInbox />
+    </div>
     </>
   )
 }
