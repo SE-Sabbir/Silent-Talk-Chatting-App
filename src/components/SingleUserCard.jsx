@@ -2,7 +2,7 @@ import React from "react";
 import { MdCancel } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";
 
-const SingleUserCard = ({userName , avatar , useremail}) => {
+const SingleUserCard = ({userName , avatar , useremail , addUser}) => {
   return (
     <>
       <div>
@@ -19,7 +19,7 @@ const SingleUserCard = ({userName , avatar , useremail}) => {
               <button className="text-[33px] text-[red] active:scale-115">
                 <MdCancel />
               </button>
-              <button className="text-[33px] text-[green] active:scale-115">
+              <button onClick={addUser} className="text-[33px] text-[green] active:scale-115">
                 <IoAddCircle />
               </button>
             </div>

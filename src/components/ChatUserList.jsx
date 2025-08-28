@@ -1,10 +1,33 @@
 import React, { useState } from "react";
 import { RiSearch2Line } from "react-icons/ri";
-
 import SilentTalkLogo2 from "../assets/images/SilentTalk logo 2.png";
 import profile1 from "../assets/images/image1.png";
+import { getDatabase, ref, onValue } from "firebase/database";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const ChatUserList = () => {
+  const db = getDatabase();
+  const currentUserInfo = useSelector((state) => state.currentUserInfo.value);
+  const [chatList , setChatLIst] = useState([])
+  console.log(chatList)
+
+  useEffect(() => {
+    onValue(ref(db, 'all-ChatUsers'), (snapshot) => {
+      console.log(snapshot.val())
+      let arr = []
+      snapshot.forEach((item)=>{
+        if(item.val().senderId == currentUserInfo.uid ){
+          arr.push({friendId:item.val().adderId ,friendName:item.val().adderName , friendPicture:item.val().adderPhoto })
+        }
+        if(item.val().adderId == currentUserInfo.uid ){
+          arr.push({friendId:item.val().senderId ,friendName:item.val().senderName , friendPicture:item.val().senderPhoto })
+        }
+      })
+      setChatLIst(arr)
+    });
+  }, []);
+
   return (
     <>
       <div className="w-full h-screen flex-1 bg-[#ececec] border-r border-[#bdb8b8]">
@@ -21,20 +44,23 @@ const ChatUserList = () => {
             className="ml-2 w-full outline-none"
           />
         </div>
+      {/* --------------Chat Friend List----------------- */}
+      {chatList.map((item , l)=>(
         <div className="flex items-center p-3 cursor-pointer hover:bg-gray-100">
           <img
-            src={profile1}
+            src={item.friendPicture}
             alt="profile image"
             className="w-12 h-12 border border-[#FFFFFF] rounded-full"
           />
           <div className="ml-3 flex-1">
             <div className="flex justify-between">
-              <h4 className="font-semibold">Md Ruhul Amin</h4>
+              <h4 className="font-semibold">{item.friendName}</h4>
               <span className="text-xs text-gray-400">5s</span>
             </div>
             <p className="text-sm text-gray-600 truncate">bhai kemon asen?</p>
           </div>
         </div>
+      ))}
       </div>
     </>
   );

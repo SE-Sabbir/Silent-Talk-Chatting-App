@@ -1,29 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import SingleUserCard from "../components/SingleUserCard";
 import { useSelector } from "react-redux";
 
 const UserList = () => {
-
-  const currentUserInfo = useSelector((state)=> state.currentUserInfo.value )
-  const [allUsers , setAllUsers] = useState([])
+  // -----------get all user code ---------------
+  const currentUserInfo = useSelector((state) => state.currentUserInfo.value);
+  const [allUsers, setAllUsers] = useState([]);
   const db = getDatabase();
-  console.log(currentUserInfo.uid)
-  useEffect(()=>{
+  useEffect(() => {
     const allList = ref(db, "all-User/");
-  onValue(allList, (listData) => {
-    let myArr = []
 
-    listData.forEach((item)=>{
-      if(item.key != currentUserInfo.uid){
+    onValue(allList, (listData) => {
+      let myArr = [];
 
-        myArr.push(item.val())
-      }
-    })
-    setAllUsers(myArr)
-  });
-
-  },[])
+      listData.forEach((item) => {
+        if (item.key != currentUserInfo.uid) {
+          myArr.push({ userData: item.val(), userId: item.key });
+        }
+      });
+      setAllUsers(myArr);
+    });
+  }, []);
+  // ------------add to chat ---------------
+  const handelAdd = (cardClick) => {
+    const db = getDatabase();
+    set(push(ref(db, "all-ChatUsers")), {
+      senderId:currentUserInfo.uid,
+      senderName:currentUserInfo.displayName,
+      senderEmail:currentUserInfo.email,
+      senderPhoto:currentUserInfo.photoURL,
+      adderId:cardClick.userId,
+      adderName:cardClick.userData.username,
+      adderEmail:cardClick.userData.email,
+      adderPhoto:cardClick.userData.profile_picture
+    });
+    console.log(cardClick)
+  };
 
   return (
     <>
@@ -34,9 +47,15 @@ const UserList = () => {
           </h1>
           <div className="flex flex-wrap justify-center gap-5 pt-5">
             {/* ---------------All User Data List Here---------------- */}
-           {allUsers.map((item)=>(
-            <SingleUserCard userName={item.username} useremail={item.email} avatar={item.profile_picture} />
-           ))}
+            {allUsers.map((item, i) => (
+              <SingleUserCard
+                key={i}
+                userName={item.userData.username}
+                useremail={item.userData.email}
+                avatar={item.userData.profile_picture}
+                addUser={()=>handelAdd(item)}
+              />
+            ))}
           </div>
         </div>
       </div>
