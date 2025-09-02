@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoVideocam } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { FiSmile } from "react-icons/fi";
 import { FiPaperclip } from "react-icons/fi";
 import { FiSend } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getDatabase, push, ref, remove, set } from "firebase/database";
+import { selectChatUserInfo } from "../slices/userInfoSlice";
 
 const UserInbox = () => {
   const chatUserData = useSelector((state) => state.currentUserInfo.chatUser);
+  const currentUser = useSelector((state)=> state.currentUserInfo.value)
+  const [showblock , setShowBlock] = useState(false)
+
+  const dispatch = useDispatch()
+  const db = getDatabase();
+  console.log(currentUser)
+
+  const handelBlock =()=>{
+    set(push(ref( db , "blockUserList")),{
+      blockUserName: chatUserData.friendName,
+      blockUserPicture: chatUserData.friendPicture,
+      blockUserId: chatUserData.friendId,
+      blockerId: currentUser.uid
+    })
+    remove(ref( db , 'all-ChatUsers/' + chatUserData.conversationId))
+    localStorage.removeItem(chatUserData)
+    dispatch(selectChatUserInfo(null))
+  }
+
   return (
     <>
     {
@@ -30,9 +51,22 @@ const UserInbox = () => {
             </div>
           </div>
           <div className="flex items-center gap-4 text-[#FFFFFF]">
+            <button>
             <IoCall className="text-[30px] cursor-pointer" />
+            </button>
+            <button>
             <IoVideocam className="text-[30px] cursor-pointer" />
-            <PiDotsThreeOutlineVerticalFill className="text-[30px] cursor-pointer" />
+            </button>
+            <div className=" relative">
+            <button onClick={()=>setShowBlock(!showblock)}>
+              <PiDotsThreeOutlineVerticalFill className="text-[30px] cursor-pointer" />
+              </button>
+            </div>
+            {
+              showblock &&
+              <button onClick={handelBlock} className="mr-7 px-5 py-2 absolute right-0 top-18 font-poppins font-normal text-base text-[#FF0000]
+               bg-gray-200 active:bg-gray-300 ">Block</button>
+            }
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { RiSearch2Line } from "react-icons/ri";
 import SilentTalkLogo2 from "../assets/images/SilentTalk logo 2.png";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectChatUserInfo } from "../slices/userInfoSlice";
@@ -15,12 +15,13 @@ const ChatUserList = () => {
   useEffect(() => {
     onValue(ref(db, "all-ChatUsers"), (snapshot) => {
       let arr = [];
-      snapshot.forEach((item , i) => {
+      snapshot.forEach((item) => {
         if (item.val().senderId == currentUserInfo.uid) {
           arr.push({
             friendId: item.val().adderId,
             friendName: item.val().adderName,
             friendPicture: item.val().adderPhoto,
+            conversationId: item.key
           });
         }
         if (item.val().adderId == currentUserInfo.uid) {
@@ -28,6 +29,7 @@ const ChatUserList = () => {
             friendId: item.val().senderId,
             friendName: item.val().senderName,
             friendPicture: item.val().senderPhoto,
+            conversationId: item.key
           });
         }
       });
@@ -59,41 +61,42 @@ const ChatUserList = () => {
         </div>
         {/* --------------Chat Friend List----------------- */}
         {chatList.length == 0 ? (
-          <div class="bg-white p-3">
-            <div class="flex items-center animate-pulse cursor-pointer">
-              <div class="w-12 h-12 bg-gray-300 rounded-full"></div>
-              <div class="ml-3 flex-1">
-                <div class="flex justify-between">
-                  <div class="w-1/2 h-4 bg-gray-300 rounded"></div>
-                  <div class="w-16 h-3 bg-gray-300 rounded"></div>
+          <div className="bg-white p-3">
+            <div className="flex items-center animate-pulse cursor-pointer">
+              <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
+              <div className="ml-3 flex-1">
+                <div className="flex justify-between">
+                  <div className="w-1/2 h-4 bg-gray-300 rounded"></div>
+                  <div className="w-16 h-3 bg-gray-300 rounded"></div>
                 </div>
-                <div class="w-full h-3 bg-gray-300 rounded mt-1"></div>
+                <div className="w-full h-3 bg-gray-300 rounded mt-1"></div>
               </div>
             </div>
-            <div class="flex items-center animate-pulse cursor-pointer mt-3">
-              <div class="w-12 h-12 bg-gray-300 rounded-full"></div>
-              <div class="ml-3 flex-1">
-                <div class="flex justify-between">
-                  <div class="w-1/2 h-4 bg-gray-300 rounded"></div>
-                  <div class="w-16 h-3 bg-gray-300 rounded"></div>
+            <div className="flex items-center animate-pulse cursor-pointer mt-3">
+              <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
+              <div className="ml-3 flex-1">
+                <div className="flex justify-between">
+                  <div className="w-1/2 h-4 bg-gray-300 rounded"></div>
+                  <div className="w-16 h-3 bg-gray-300 rounded"></div>
                 </div>
-                <div class="w-full h-3 bg-gray-300 rounded mt-1"></div>
+                <div className="w-full h-3 bg-gray-300 rounded mt-1"></div>
               </div>
             </div>
-            <div class="flex items-center animate-pulse cursor-pointer mt-3">
-              <div class="w-12 h-12 bg-gray-300 rounded-full"></div>
-              <div class="ml-3 flex-1">
-                <div class="flex justify-between">
-                  <div class="w-1/2 h-4 bg-gray-300 rounded"></div>
-                  <div class="w-16 h-3 bg-gray-300 rounded"></div>
+            <div className="flex items-center animate-pulse cursor-pointer mt-3">
+              <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
+              <div className="ml-3 flex-1">
+                <div className="flex justify-between">
+                  <div className="w-1/2 h-4 bg-gray-300 rounded"></div>
+                  <div className="w-16 h-3 bg-gray-300 rounded"></div>
                 </div>
-                <div class="w-full h-3 bg-gray-300 rounded mt-1"></div>
+                <div className="w-full h-3 bg-gray-300 rounded mt-1"></div>
               </div>
             </div>
           </div>
         ) : (
-          chatList.map((item) => (
+          chatList.map((item, i) => (
             <div
+              key={i}
               onClick={() => handelSelectUser(item)}
               className="flex items-center p-3 cursor-pointer hover:bg-gray-100"
             >
