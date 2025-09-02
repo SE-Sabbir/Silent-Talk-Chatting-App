@@ -7,6 +7,7 @@ const UserList = () => {
   // -----------get all user code ---------------
   const currentUserInfo = useSelector((state) => state.currentUserInfo.value);
   const [allUsers, setAllUsers] = useState([]);
+  const [addUsersList , setAddUsersList] = useState([])
   const db = getDatabase();
   useEffect(() => {
     const allList = ref(db, "all-User/");
@@ -16,26 +17,37 @@ const UserList = () => {
 
       listData.forEach((item) => {
         if (item.key != currentUserInfo.uid) {
-          myArr.push({ userData: item.val(), userId: item.key });
+          myArr.push({ userData:item.val(), userId:item.key });
         }
       });
       setAllUsers(myArr);
     });
+
+    onValue(ref(db, "all-ChatUsers/"), (snapshot) => {
+      let myArr = []
+      snapshot.forEach((item)=>{
+        if(item.val().senderId == currentUserInfo.uid){
+          myArr.push(item.val())
+        }
+        setAddUsersList(myArr)
+      })
+    });
+
   }, []);
+
   // ------------add to chat ---------------
   const handelAdd = (cardClick) => {
     const db = getDatabase();
     set(push(ref(db, "all-ChatUsers")), {
-      senderId:currentUserInfo.uid,
-      senderName:currentUserInfo.displayName,
-      senderEmail:currentUserInfo.email,
-      senderPhoto:currentUserInfo.photoURL,
-      adderId:cardClick.userId,
-      adderName:cardClick.userData.username,
-      adderEmail:cardClick.userData.email,
-      adderPhoto:cardClick.userData.profile_picture
+      senderId: currentUserInfo.uid,
+      senderName: currentUserInfo.displayName,
+      senderEmail: currentUserInfo.email,
+      senderPhoto: currentUserInfo.photoURL,
+      adderId: cardClick.userId,
+      adderName: cardClick.userData.username,
+      adderEmail: cardClick.userData.email,
+      adderPhoto: cardClick.userData.profile_picture,
     });
-    console.log(cardClick)
   };
 
   return (
@@ -53,8 +65,11 @@ const UserList = () => {
                 userName={item.userData.username}
                 useremail={item.userData.email}
                 avatar={item.userData.profile_picture}
-                addUser={()=>handelAdd(item)}
+                addUser={() => handelAdd(item)}
               />
+              // addUsersList.map((item2)=>(
+              //   item.userId == item2.adderId && 
+              // ))
             ))}
           </div>
         </div>

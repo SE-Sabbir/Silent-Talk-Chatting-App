@@ -21,8 +21,6 @@ const Navbar = () => {
   
       navigate('/login')
     }
-  
-    console.log(currentUserInfo)
 
   return (
     <>

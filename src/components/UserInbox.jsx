@@ -5,24 +5,29 @@ import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { FiSmile } from "react-icons/fi";
 import { FiPaperclip } from "react-icons/fi";
 import { FiSend } from "react-icons/fi";
-
-import profile1 from "../assets/images/image1.png";
+import { useSelector } from "react-redux";
 
 const UserInbox = () => {
+  const chatUserData = useSelector((state) => state.currentUserInfo.chatUser);
   return (
     <>
+    {
+      chatUserData?
       <div className="Chat_section flex flex-col w-full h-screen">
         {/* Chat Header */}
         <div className="flex items-center justify-between p-[15px]  bg-[#3e9cf3] shadow-2xl">
           <div className="flex items-center">
             <div className="w-12 h-12  flex justify-center items-center border border-[#FFFFFF] rounded-full overflow-hidden">
               <img
-                src={profile1}
+                src={chatUserData?.friendPicture}
                 alt="profile image"
                 className=" w-full h-full "
               />
             </div>
-            <h4 className="ml-3 font-semibold text-[#FFFFFF]"></h4>
+            <div className=" ml-4">
+              <h2 className="font-semibold text-[#FFFFFF]">{chatUserData?.friendName}</h2>
+              <p className="font-normal text-[#0cdf1e] leading-4">online</p>
+            </div>
           </div>
           <div className="flex items-center gap-4 text-[#FFFFFF]">
             <IoCall className="text-[30px] cursor-pointer" />
@@ -52,6 +57,11 @@ const UserInbox = () => {
           </button>
         </div>
       </div>
+      :
+    <div className="flex flex-1/1 justify-center items-center">
+      <h1 className=" font-poppins font-medium text-3xl text-[#a79e9e] ">Select an User to Chat...</h1>
+    </div>
+    }
     </>
   );
 };
