@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import LayoutOne from './layouts/LayoutOne'
 import ErrorPage from './pages/ErrorPage'
 import UserList from './pages/UserList'
+import BlockUserList from './pages/BlockUserList'
 
 const App = () => {
   const myRoute = createBrowserRouter(createRoutesFromElements(
@@ -17,6 +18,7 @@ const App = () => {
       </Route>
 
       <Route path='/userlist' element={<UserList />}/>
+      <Route path='/blocklist' element={<BlockUserList />}/>
       <Route path='/register' element={<Registration />}/>
       <Route path='/login' element={<Login />}/>
       <Route path='*' element={<ErrorPage />}/>

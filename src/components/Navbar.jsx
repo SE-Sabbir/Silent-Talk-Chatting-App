@@ -33,7 +33,7 @@ const Navbar = () => {
           </div>
           <div className=" w-full items-center flex flex-col justify-around pt-5 gap-5 border-t border-[#bdb8b8] ">
             <Link className=" text-[30px] text-[#FFFFFF]" to={'/userlist'}><FaUserPlus/></Link>
-            <Link className=" text-[30px] text-[#FFFFFF]" to={'#'}><FaUserSlash/></Link>
+            <Link className=" text-[30px] text-[#FFFFFF]" to={'/blocklist'}><FaUserSlash/></Link>
             <Link className=" text-[30px] text-[#FFFFFF]" to={'#'}><PiFolderUserBold/></Link>
           </div>
           <div className=" w-full items-center flex flex-col justify-around pt-5 gap-5 border-t border-[#bdb8b8] ">

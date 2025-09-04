@@ -21,6 +21,7 @@ const ChatUserList = () => {
             friendId: item.val().adderId,
             friendName: item.val().adderName,
             friendPicture: item.val().adderPhoto,
+            friendEmail: item.val().adderEmail,
             conversationId: item.key
           });
         }
@@ -29,6 +30,7 @@ const ChatUserList = () => {
             friendId: item.val().senderId,
             friendName: item.val().senderName,
             friendPicture: item.val().senderPhoto,
+            friendEmail: item.val().senderEmail,
             conversationId: item.key
           });
         }

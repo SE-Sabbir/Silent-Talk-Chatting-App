@@ -16,11 +16,11 @@ const UserInbox = () => {
 
   const dispatch = useDispatch()
   const db = getDatabase();
-  console.log(currentUser)
 
   const handelBlock =()=>{
     set(push(ref( db , "blockUserList")),{
       blockUserName: chatUserData.friendName,
+      blockUserEmail: chatUserData.friendEmail,
       blockUserPicture: chatUserData.friendPicture,
       blockUserId: chatUserData.friendId,
       blockerId: currentUser.uid
@@ -29,7 +29,7 @@ const UserInbox = () => {
     localStorage.removeItem(chatUserData)
     dispatch(selectChatUserInfo(null))
   }
-
+console.log(chatUserData)
   return (
     <>
     {
